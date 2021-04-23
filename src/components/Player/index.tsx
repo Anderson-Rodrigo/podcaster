@@ -2,8 +2,8 @@ import Image from 'next/image'
 import { useContext, useRef, useEffect } from 'react'
 import { PlayerContext } from '../../contexts/PlayerContexts'
 import styles from './styles.module.scss'
-import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
+import Slider from 'rc-slider'
 
 export function Player() {
     const audioRef = useRef<HTMLAudioElement>(null)
