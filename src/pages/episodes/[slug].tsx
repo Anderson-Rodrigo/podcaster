@@ -53,10 +53,26 @@ export default function Episode({ episode }: EpisodeProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+    const { data } = await api.get('episodes', {
+        params: {
+          _limit: 2,
+          _sort: 'published_at',
+          _order: 'desc'
+        }
+      })
+
+    const paths = data.map(episodes => {
+        return {
+            params: {
+                slug: episodes.id
+            }
+        }
+    })
+
     return {
-        paths: [],
-        fallback: 'blocking'
-    }
+        paths, //nao utiliza nenhum parametro de forma estatica - no momento da build nao gera nada de forma estatica
+        fallback: 'blocking' //aqui muda o comportamento da pagin -- caso estiver como false, ele retorna 404 -- quando blocking na camada do node, só vai ser navagda,
+    }//quando os dados estiverem sidos carregados, só vai renderizar a pagina quando todas as informações estiverem prontas
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
